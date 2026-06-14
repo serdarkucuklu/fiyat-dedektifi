@@ -221,9 +221,26 @@ def run_agent():
         data = json.loads(clean_json)
         data["last_updated"] = datetime.datetime.utcnow().isoformat() + "Z"
         
-        # Overwrite image URLs with verified ones to prevent 404 broken images
+        # Overwrite image URLs with verified ones and fix affiliate/search links
         for deal in data.get("deals", []):
             deal["image_url"] = get_verified_product_image(deal["title"], deal.get("category"))
+            
+            # Clean and construct search links if missing or invalid
+            link = deal.get("affiliate_link", "")
+            if not isinstance(link, str):
+                link = ""
+            link = link.strip()
+            
+            source = deal.get("source", "").lower()
+            title_query = urllib.parse.quote_plus(deal["title"])
+            
+            if not link or link.upper() in ["N/A", "NONE", "NULL", ""]:
+                if "trendyol" in source:
+                    deal["affiliate_link"] = f"https://www.trendyol.com/sr?q={title_query}"
+                elif "hepsiburada" in source:
+                    deal["affiliate_link"] = f"https://www.hepsiburada.com/ara?q={title_query}"
+                else:
+                    deal["affiliate_link"] = f"https://www.amazon.com.tr/s?k={title_query}&tag=aurafocus-21"
             
         # Save to file
         with open("data.json", "w", encoding="utf-8") as f:

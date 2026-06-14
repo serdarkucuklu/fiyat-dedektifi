@@ -71,6 +71,19 @@ function render() {
         const row = document.createElement('div');
         row.className = 'deal-row';
         
+        // Sanitize and resolve empty / relative / 'N/A' affiliate links on the fly
+        let link = (deal.affiliate_link || '').trim();
+        if (!link || link.toUpperCase() === 'N/A' || link.toUpperCase() === 'NONE' || link.toUpperCase() === 'NULL') {
+            const query = encodeURIComponent(deal.title);
+            if (deal.source === 'Trendyol') {
+                link = `https://www.trendyol.com/sr?q=${query}`;
+            } else if (deal.source === 'Hepsiburada') {
+                link = `https://www.hepsiburada.com/ara?q=${query}`;
+            } else {
+                link = `https://www.amazon.com.tr/s?k=${query}&tag=aurafocus-21`;
+            }
+        }
+        
         row.innerHTML = `
             <div class="deal-img-container">
                 <img src="${deal.image_url}" alt="${deal.title}" class="deal-img" loading="lazy" onerror="this.onerror=null; this.src=getFallbackProductImage('${deal.title}')">
@@ -88,7 +101,7 @@ function render() {
                     <span class="orig-price">${deal.original_price}</span>
                     <span class="disc-price">${deal.discount_price}</span>
                 </div>
-                <a href="${deal.affiliate_link}" target="_blank" class="deal-btn">
+                <a href="${link}" target="_blank" class="deal-btn">
                     Fırsatı Yakala <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
             </div>
