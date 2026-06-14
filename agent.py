@@ -60,6 +60,10 @@ def get_verified_product_image(title, category=None):
             "https://images.unsplash.com/photo-1598327105666-5b89351aff97?q=80&w=600&auto=format&fit=crop", # Android phone
             "https://images.unsplash.com/photo-1580910051074-3eb694886505?q=80&w=600&auto=format&fit=crop"  # Phone on table
         ],
+        "tablet": [
+            "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=600&auto=format&fit=crop", # iPad / tablet on dark background
+            "https://images.unsplash.com/photo-1589739900243-4b52cd9b104e?q=80&w=600&auto=format&fit=crop"  # Tablet on desk
+        ],
         "laptop": [
             "https://images.unsplash.com/photo-1496181130204-7552cc14acfc?q=80&w=600&auto=format&fit=crop", # Laptop
             "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=600&auto=format&fit=crop"  # MacBook
@@ -79,6 +83,14 @@ def get_verified_product_image(title, category=None):
             "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=600&auto=format&fit=crop", # Watch
             "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600&auto=format&fit=crop"  # Apple watch style
         ],
+        "gaming": [
+            "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?q=80&w=600&auto=format&fit=crop", # DualSense controller
+            "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=600&auto=format&fit=crop"  # Gaming setup / controller
+        ],
+        "tv_monitor": [
+            "https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&w=600&auto=format&fit=crop", # Smart TV
+            "https://images.unsplash.com/photo-1552533237-c8c884b2540b?q=80&w=600&auto=format&fit=crop"  # TV on wall
+        ],
         "vacuum": [
             "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=600&auto=format&fit=crop", # Cleaning vacuum
             "https://images.unsplash.com/photo-1558317374-067fb5f30001?q=80&w=600&auto=format&fit=crop"  # Robot vacuum
@@ -89,17 +101,22 @@ def get_verified_product_image(title, category=None):
         ],
         "cosmetic_beauty": [
             "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=600&auto=format&fit=crop", # Cosmetics
-            "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?q=80&w=600&auto=format&fit=crop", # Skin care bottle
             "https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=600&auto=format&fit=crop"  # Facial roller/beauty product
+        ],
+        "personal_care": [
+            "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=600&auto=format&fit=crop", # Massage therapy / stones
+            "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?q=80&w=600&auto=format&fit=crop"  # Wellness oil/massage
         ],
         "clothing_accessory": [
             "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=600&auto=format&fit=crop", # Handbag
-            "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=600&auto=format&fit=crop", # Sunglasses
-            "https://images.unsplash.com/photo-1509319117193-57bab727e09d?q=80&w=600&auto=format&fit=crop"  # Straw hat
+            "https://images.unsplash.com/photo-1509319117193-57bab727e09d?q=80&w=600&auto=format&fit=crop"  # Straw hat / clothing
         ],
         "home_appliance": [
-            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop", # Modern wall AC
-            "https://images.unsplash.com/photo-1528740561666-bd247e665488?q=80&w=600&auto=format&fit=crop"  # Humidifier/mist
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop"  # Modern wall AC
+        ],
+        "cooling_fan": [
+            "https://images.unsplash.com/photo-1618945902034-7389441a1a5b?q=80&w=600&auto=format&fit=crop", # Minimalist white desk fan
+            "https://images.unsplash.com/photo-1591181520189-abfe073ff477?q=80&w=600&auto=format&fit=crop"  # Retro desk fan
         ],
         "thermos": [
             "https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=600&auto=format&fit=crop", # Thermos flask
@@ -115,36 +132,49 @@ def get_verified_product_image(title, category=None):
         ]
     }
     
-    # Check if category matches any predefined keys
-    if cat in images:
-        selected_cat = cat
-    else:
-        # Fallback keyword matching
-        selected_cat = "general_tech"
-        if any(k in title_lower for k in ["kulaklık", "headphone", "airpods", "kulaklik"]):
-            selected_cat = "headphones"
-        elif any(k in title_lower for k in ["saat", "watch", "band", "bileklik", "smartwatch"]):
-            selected_cat = "smartwatch"
-        elif any(k in title_lower for k in ["hoparlör", "speaker", "soundbar", "ses"]):
-            selected_cat = "speaker"
-        elif any(k in title_lower for k in ["telefon", "phone", "iphone", "redmi", "samsung", "xiaomi"]):
-            selected_cat = "smartphone"
-        elif any(k in title_lower for k in ["laptop", "bilgisayar", "computer", "macbook", "notebook"]):
-            selected_cat = "laptop"
-        elif any(k in title_lower for k in ["süpürge", "dyson", "robot", "temizlik", "supurge"]):
-            selected_cat = "vacuum"
-        elif any(k in title_lower for k in ["airfryer", "fritöz", "fırın", "mutfak"]):
-            selected_cat = "airfryer"
-        elif any(k in title_lower for k in ["parfüm", "krem", "lumea", "epilasyon", "cilt", "bakım", "tıraş"]):
-            selected_cat = "cosmetic_beauty"
-        elif any(k in title_lower for k in ["çanta", "bag", "gözlük", "fular", "kemer", "aksesuar"]):
-            selected_cat = "clothing_accessory"
-        elif any(k in title_lower for k in ["klima", "hava", "vantilatör", "ısıtıcı"]):
-            selected_cat = "home_appliance"
-        elif any(k in title_lower for k in ["termos", "matara", "mug"]):
-            selected_cat = "thermos"
-        elif any(k in title_lower for k in ["ev", "yastık", "perde", "koltuk", "sehpa"]):
-            selected_cat = "general_home"
+    # Priority keyword-based routing first to ensure accurate mappings
+    selected_cat = None
+    if any(k in title_lower for k in ["tablet", "ipad"]):
+        selected_cat = "tablet"
+    elif any(k in title_lower for k in ["playstation", "xbox", "nintendo", "ps5", "oyun", "konsol", "gamepad", "bundle"]):
+        selected_cat = "gaming"
+    elif any(k in title_lower for k in ["tv", "televizyon", "monitör", "monitor", "ekran"]):
+        selected_cat = "tv_monitor"
+    elif any(k in title_lower for k in ["vantilatör", "fan", "vantilator"]):
+        selected_cat = "cooling_fan"
+    elif any(k in title_lower for k in ["masaj", "gevşetme", "massage", "epilasyon", "lumea", "tıraş", "traş"]):
+        selected_cat = "personal_care"
+    elif any(k in title_lower for k in ["kulaklık", "headphone", "airpods", "kulaklik"]):
+        selected_cat = "headphones"
+    elif any(k in title_lower for k in ["saat", "watch", "band", "bileklik", "smartwatch"]):
+        selected_cat = "smartwatch"
+    elif any(k in title_lower for k in ["hoparlör", "speaker", "soundbar", "ses"]):
+        selected_cat = "speaker"
+    elif any(k in title_lower for k in ["telefon", "phone", "iphone", "redmi", "samsung", "xiaomi"]):
+        selected_cat = "smartphone"
+    elif any(k in title_lower for k in ["laptop", "bilgisayar", "computer", "macbook", "notebook"]):
+        selected_cat = "laptop"
+    elif any(k in title_lower for k in ["süpürge", "dyson", "robot", "temizlik", "supurge"]):
+        selected_cat = "vacuum"
+    elif any(k in title_lower for k in ["airfryer", "fritöz", "fırın", "mutfak"]):
+        selected_cat = "airfryer"
+    elif any(k in title_lower for k in ["parfüm", "krem", "cilt", "bakım"]):
+        selected_cat = "cosmetic_beauty"
+    elif any(k in title_lower for k in ["çanta", "bag", "gözlük", "fular", "kemer", "aksesuar", "valiz"]):
+        selected_cat = "clothing_accessory"
+    elif any(k in title_lower for k in ["klima", "hava", "vantilatör", "ısıtıcı"]):
+        selected_cat = "home_appliance"
+    elif any(k in title_lower for k in ["termos", "matara", "mug"]):
+        selected_cat = "thermos"
+    elif any(k in title_lower for k in ["ev", "yastık", "perde", "koltuk", "sehpa"]):
+        selected_cat = "general_home"
+        
+    # If no priority keyword matches, try the category returned by Gemini
+    if not selected_cat:
+        if cat in images:
+            selected_cat = cat
+        else:
+            selected_cat = "general_tech"
 
     img_list = images.get(selected_cat, images["general_tech"])
     hash_val = sum(ord(c) for c in title)
@@ -187,7 +217,7 @@ def run_agent():
     5. source: The store name (MUST be exactly one of: 'Amazon.com.tr', 'Hepsiburada', 'Trendyol').
     6. affiliate_link: Amazon.com.tr search link containing 'tag=aurafocus-21' for this product, e.g. "https://www.amazon.com.tr/s?k=anker+soundcore+q30&tag=aurafocus-21"
     7. description: A concise 1-sentence Turkish sales pitch/review explaining why this is a good deal.
-    8. category: The product category, which MUST be exactly one of: 'smartphone', 'laptop', 'headphones', 'speaker', 'smartwatch', 'vacuum', 'airfryer', 'cosmetic_beauty', 'clothing_accessory', 'home_appliance', 'thermos', 'general_tech', 'general_home'.
+    8. category: The product category, which MUST be exactly one of: 'smartphone', 'tablet', 'laptop', 'headphones', 'speaker', 'smartwatch', 'gaming', 'tv_monitor', 'vacuum', 'airfryer', 'cooling_fan', 'home_appliance', 'personal_care', 'cosmetic_beauty', 'clothing_accessory', 'thermos', 'general_tech', 'general_home'.
 
     SEARCH TRENDS:
     {search_results}
