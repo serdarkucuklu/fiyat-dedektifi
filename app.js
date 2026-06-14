@@ -9,6 +9,12 @@ const searchInput = document.getElementById('search-input');
 const filterBtns = document.querySelectorAll('.store-filters .filter-btn');
 const dealsFeed = document.getElementById('deals-feed');
 
+// Lightbox Modal Elements
+const imageModal = document.getElementById('image-modal');
+const modalImg = document.getElementById('modal-img');
+const modalCaption = document.getElementById('modal-caption');
+const modalClose = document.getElementById('modal-close');
+
 // Fetch and load database
 async function loadData() {
     try {
@@ -130,6 +136,38 @@ filterBtns.forEach(btn => {
         currentStore = e.currentTarget.dataset.store;
         render();
     });
+});
+
+// Lightbox Modal Event Handlers
+dealsFeed.addEventListener('click', (e) => {
+    if (e.target.classList.contains('deal-img')) {
+        const imgSrc = e.target.src;
+        const imgAlt = e.target.alt;
+        
+        modalImg.src = imgSrc;
+        modalImg.alt = imgAlt;
+        modalCaption.textContent = imgAlt;
+        
+        imageModal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Disable background scrolling
+    }
+});
+
+function closeModal() {
+    imageModal.classList.remove('active');
+    document.body.style.overflow = ''; // Re-enable background scrolling
+}
+
+modalClose.addEventListener('click', closeModal);
+imageModal.addEventListener('click', (e) => {
+    if (e.target === imageModal) {
+        closeModal();
+    }
+});
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && imageModal.classList.contains('active')) {
+        closeModal();
+    }
 });
 
 // Initialize

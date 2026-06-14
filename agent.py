@@ -49,57 +49,104 @@ def call_gemini(prompt: str, use_search: bool = False):
             print(f"Error calling Gemini ({model}): {e}")
     return None
 
-def get_verified_product_image(title):
+def get_verified_product_image(title, category=None):
     title_lower = title.lower()
+    cat = (category or "").lower()
     
     # Predefined high-quality verified Unsplash images for products
     images = {
-        "audio": [
+        "smartphone": [
+            "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600&auto=format&fit=crop", # Rose gold phone
+            "https://images.unsplash.com/photo-1598327105666-5b89351aff97?q=80&w=600&auto=format&fit=crop", # Android phone
+            "https://images.unsplash.com/photo-1580910051074-3eb694886505?q=80&w=600&auto=format&fit=crop"  # Phone on table
+        ],
+        "laptop": [
+            "https://images.unsplash.com/photo-1496181130204-7552cc14acfc?q=80&w=600&auto=format&fit=crop", # Laptop
+            "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=600&auto=format&fit=crop"  # MacBook
+        ],
+        "headphones": [
             "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600&auto=format&fit=crop", # Headphones
+            "https://images.unsplash.com/photo-1487215078519-e21cc028cb29?q=80&w=600&auto=format&fit=crop", # Studio headphones
+            "https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=600&auto=format&fit=crop"  # Wireless headphones
+        ],
+        "speaker": [
             "https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=600&auto=format&fit=crop", # Speaker
-            "https://images.unsplash.com/photo-1487215078519-e21cc028cb29?q=80&w=600&auto=format&fit=crop"  # Studio headphones
+            "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?q=80&w=600&auto=format&fit=crop", # Smart speaker
+            "https://images.unsplash.com/photo-1612198188258-d2427a195e34?q=80&w=600&auto=format&fit=crop"  # Soundbar
         ],
-        "wearable": [
+        "smartwatch": [
             "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?q=80&w=600&auto=format&fit=crop", # Smartwatch
-            "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=600&auto=format&fit=crop", # Watch on table
-            "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600&auto=format&fit=crop"  # Sleek white watch
+            "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=600&auto=format&fit=crop", # Watch
+            "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600&auto=format&fit=crop"  # Apple watch style
         ],
-        "kitchen": [
-            "https://images.unsplash.com/photo-1621972750749-0fbb1abb7736?q=80&w=600&auto=format&fit=crop", # Coffee maker
-            "https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=600&auto=format&fit=crop", # Thermos flask
-            "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?q=80&w=600&auto=format&fit=crop"  # Kitchen items
+        "vacuum": [
+            "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=600&auto=format&fit=crop", # Cleaning vacuum
+            "https://images.unsplash.com/photo-1558317374-067fb5f30001?q=80&w=600&auto=format&fit=crop"  # Robot vacuum
         ],
-        "gaming_pc": [
-            "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=600&auto=format&fit=crop", # Gaming mouse
-            "https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=600&auto=format&fit=crop", # Keyboard
-            "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?q=80&w=600&auto=format&fit=crop"  # Desk setup/laptop
+        "airfryer": [
+            "https://images.unsplash.com/photo-1621972750749-0fbb1abb7736?q=80&w=600&auto=format&fit=crop", # Airfryer/oven style
+            "https://images.unsplash.com/photo-1578643463396-0997cb5328c1?q=80&w=600&auto=format&fit=crop"  # Blender/mixer
+        ],
+        "cosmetic_beauty": [
+            "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=600&auto=format&fit=crop", # Cosmetics
+            "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?q=80&w=600&auto=format&fit=crop", # Skin care bottle
+            "https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=600&auto=format&fit=crop"  # Facial roller/beauty product
+        ],
+        "clothing_accessory": [
+            "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=600&auto=format&fit=crop", # Handbag
+            "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=600&auto=format&fit=crop", # Sunglasses
+            "https://images.unsplash.com/photo-1509319117193-57bab727e09d?q=80&w=600&auto=format&fit=crop"  # Straw hat
         ],
         "home_appliance": [
-            "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=600&auto=format&fit=crop", # Cleaning/vacuum
-            "https://images.unsplash.com/photo-1528740561666-bd247e665488?q=80&w=600&auto=format&fit=crop", # Humidifier
-            "https://images.unsplash.com/photo-1558317374-067fb5f30001?q=80&w=600&auto=format&fit=crop"  # Air purifier/fan
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop", # Modern wall AC
+            "https://images.unsplash.com/photo-1528740561666-bd247e665488?q=80&w=600&auto=format&fit=crop"  # Humidifier/mist
         ],
-        "general": [
-            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop", # Tech/office
-            "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?q=80&w=600&auto=format&fit=crop", # General camera
-            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600&auto=format&fit=crop"  # Default headphones
+        "thermos": [
+            "https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=600&auto=format&fit=crop", # Thermos flask
+            "https://images.unsplash.com/photo-1602143407151-7111542de6e8?q=80&w=600&auto=format&fit=crop"  # Steel bottle
+        ],
+        "general_tech": [
+            "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?q=80&w=600&auto=format&fit=crop", # Gadgets on desk
+            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop"  # Keyboard/tablet
+        ],
+        "general_home": [
+            "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop", # Living room
+            "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=600&auto=format&fit=crop"  # Chair/pillow
         ]
     }
     
-    # Categorization based on keywords
-    cat = "general"
-    if any(k in title_lower for k in ["kulaklık", "headphone", "ses", "hoparlör", "speaker", "soundbar", "kulaklik"]):
-        cat = "audio"
-    elif any(k in title_lower for k in ["saat", "watch", "band", "bileklik", "smartwatch"]):
-        cat = "wearable"
-    elif any(k in title_lower for k in ["mutfak", "airfryer", "kahve", "tencere", "tava", "bardak", "termos", "makine"]):
-        cat = "kitchen"
-    elif any(k in title_lower for k in ["mouse", "klavye", "keyboard", "oyuncu", "gaming", "mousepad"]):
-        cat = "gaming_pc"
-    elif any(k in title_lower for k in ["süpürge", "dyson", "robot", "temizlik", "supurge"]):
-        cat = "home_appliance"
-        
-    img_list = images.get(cat, images["general"])
+    # Check if category matches any predefined keys
+    if cat in images:
+        selected_cat = cat
+    else:
+        # Fallback keyword matching
+        selected_cat = "general_tech"
+        if any(k in title_lower for k in ["kulaklık", "headphone", "airpods", "kulaklik"]):
+            selected_cat = "headphones"
+        elif any(k in title_lower for k in ["saat", "watch", "band", "bileklik", "smartwatch"]):
+            selected_cat = "smartwatch"
+        elif any(k in title_lower for k in ["hoparlör", "speaker", "soundbar", "ses"]):
+            selected_cat = "speaker"
+        elif any(k in title_lower for k in ["telefon", "phone", "iphone", "redmi", "samsung", "xiaomi"]):
+            selected_cat = "smartphone"
+        elif any(k in title_lower for k in ["laptop", "bilgisayar", "computer", "macbook", "notebook"]):
+            selected_cat = "laptop"
+        elif any(k in title_lower for k in ["süpürge", "dyson", "robot", "temizlik", "supurge"]):
+            selected_cat = "vacuum"
+        elif any(k in title_lower for k in ["airfryer", "fritöz", "fırın", "mutfak"]):
+            selected_cat = "airfryer"
+        elif any(k in title_lower for k in ["parfüm", "krem", "lumea", "epilasyon", "cilt", "bakım", "tıraş"]):
+            selected_cat = "cosmetic_beauty"
+        elif any(k in title_lower for k in ["çanta", "bag", "gözlük", "fular", "kemer", "aksesuar"]):
+            selected_cat = "clothing_accessory"
+        elif any(k in title_lower for k in ["klima", "hava", "vantilatör", "ısıtıcı"]):
+            selected_cat = "home_appliance"
+        elif any(k in title_lower for k in ["termos", "matara", "mug"]):
+            selected_cat = "thermos"
+        elif any(k in title_lower for k in ["ev", "yastık", "perde", "koltuk", "sehpa"]):
+            selected_cat = "general_home"
+
+    img_list = images.get(selected_cat, images["general_tech"])
     hash_val = sum(ord(c) for c in title)
     idx = hash_val % len(img_list)
     return img_list[idx]
@@ -125,20 +172,22 @@ def run_agent():
     except Exception as e:
         print(f"Warning: Search grounding failed: {e}")
 
-    # 2. Call Gemini to format the top 5 deals
-    print("Curating top 5 deals via Gemini...")
+    # 2. Call Gemini to format the top 15 deals (5 from each store)
+    print("Curating top 15 deals via Gemini...")
     generator_prompt = f"""
     You are an expert shopping curator for 'Fiyat Dedektifi', a premium minimalist price comparison dashboard for Turkish youth.
-    Analyze the following search trends and select EXACTLY 5 notable, verified discounts/deals currently active in Turkey.
+    Analyze the following search trends and select EXACTLY 15 notable, verified discounts/deals currently active in Turkey.
+    You MUST select exactly 5 deals from Amazon.com.tr, exactly 5 deals from Hepsiburada, and exactly 5 deals from Trendyol.
+    
     For each deal, generate:
     1. title: Clean Turkish product name (e.g. 'Anker Soundcore Q30 Kulaklık').
     2. original_price: Approximate standard market price in TL (e.g., '2.499 TL').
     3. discount_price: Actual discount/sale price in TL (e.g., '1.799 TL').
     4. discount_rate: Calculated drop percentage (e.g., '%28 İndirim').
-    5. source: The store name (e.g., 'Amazon.com.tr', 'Hepsiburada', 'Trendyol').
+    5. source: The store name (MUST be exactly one of: 'Amazon.com.tr', 'Hepsiburada', 'Trendyol').
     6. affiliate_link: Amazon.com.tr search link containing 'tag=aurafocus-21' for this product, e.g. "https://www.amazon.com.tr/s?k=anker+soundcore+q30&tag=aurafocus-21"
-    7. description: A concise 1-sentence Turkish sales pitch/review explaining why this is a good deal (e.g., 'Son 3 ayın en düşük fiyatı, fiyat/performans canavarı.').
-    8. image_url: A high-quality Unsplash image URL suitable for this item category.
+    7. description: A concise 1-sentence Turkish sales pitch/review explaining why this is a good deal.
+    8. category: The product category, which MUST be exactly one of: 'smartphone', 'laptop', 'headphones', 'speaker', 'smartwatch', 'vacuum', 'airfryer', 'cosmetic_beauty', 'clothing_accessory', 'home_appliance', 'thermos', 'general_tech', 'general_home'.
 
     SEARCH TRENDS:
     {search_results}
@@ -151,12 +200,12 @@ def run_agent():
           "original_price": "Price TL",
           "discount_price": "Discount TL",
           "discount_rate": "% Indirim",
-          "source": "Store Name",
+          "source": "Amazon.com.tr",
           "affiliate_link": "Amazon search link with tag=aurafocus-21",
           "description": "Short Turkish description.",
-          "image_url": "Unsplash image URL"
+          "category": "headphones"
         }},
-        ... (exactly 5 items)
+        ... (exactly 15 items in total, 5 for each source)
       ]
     }}
     """
@@ -174,7 +223,7 @@ def run_agent():
         
         # Overwrite image URLs with verified ones to prevent 404 broken images
         for deal in data.get("deals", []):
-            deal["image_url"] = get_verified_product_image(deal["title"])
+            deal["image_url"] = get_verified_product_image(deal["title"], deal.get("category"))
             
         # Save to file
         with open("data.json", "w", encoding="utf-8") as f:
