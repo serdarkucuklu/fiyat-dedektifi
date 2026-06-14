@@ -1,55 +1,170 @@
 {
   "deals": [
     {
-      "title": "Philips Lumea 9900 Serisi BRI951/03 IPL",
-      "original_price": "14.999 TL",
-      "discount_price": "10.799 TL",
+      "title": "Apple Watch Series 11 Akıllı Saat",
+      "original_price": "12.999 TL",
+      "discount_price": "9.749 TL",
+      "discount_rate": "%25 İndirim",
+      "source": "Amazon.com.tr",
+      "affiliate_link": "https://www.amazon.com.tr/s?k=apple+watch+series+11&tag=aurafocus-21",
+      "description": "En yeni Apple Watch modeli, sağlık ve fitness takibinde lider özellikleri %25 indirimle yakalama fırsatı sunuyor.",
+      "category": "smartwatch",
+      "image_url": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "Apple AirPods Pro (3. Nesil) Kablosuz Kulaklık",
+      "original_price": "8.199 TL",
+      "discount_price": "5.899 TL",
       "discount_rate": "%28 İndirim",
       "source": "Amazon.com.tr",
-      "affiliate_link": "https://www.amazon.com.tr/s?k=philips+lumea+9900+bri951&tag=aurafocus-21",
-      "description": "Son 30 günün en düşük fiyatıyla, pürüzsüz bir cilt için kalıcı çözüm sunan yüksek performanslı bir cihaz.",
-      "image_url": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?q=80&w=600&auto=format&fit=crop"
+      "affiliate_link": "https://www.amazon.com.tr/s?k=apple+airpods+pro+3&tag=aurafocus-21",
+      "description": "Aktif gürültü engelleme ve şeffaf mod ile eşsiz bir ses deneyimini %28 indirimle şimdi yakalayın.",
+      "category": "headphones",
+      "image_url": "https://images.unsplash.com/photo-1487215078519-e21cc028cb29?q=80&w=600&auto=format&fit=crop"
     },
     {
-      "title": "Redmi 13C 256 GB 8 GB Ram Siyah",
-      "original_price": "12.499 TL",
-      "discount_price": "9.499 TL",
-      "discount_rate": "%24 İndirim",
-      "source": "Hepsiburada",
-      "affiliate_link": "https://www.amazon.com.tr/s?k=redmi+13c+256gb&tag=aurafocus-21",
-      "description": "Dev İndirim Günleri kapsamında, güçlü performansı ve geniş depolama alanıyla bütçe dostu akıllı telefon fırsatı.",
-      "image_url": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-      "title": "Robeve Delikli Ayarlanabilir Klima Hava Yönlendirici Aparatı",
-      "original_price": "349 TL",
-      "discount_price": "249 TL",
-      "discount_rate": "%29 İndirim",
+      "title": "MacBook Air 13 inç Laptop (M3 Çip)",
+      "original_price": "35.999 TL",
+      "discount_price": "30.999 TL",
+      "discount_rate": "%14 İndirim",
       "source": "Amazon.com.tr",
-      "affiliate_link": "https://www.amazon.com.tr/s?k=robeve+klima+hava+yönlendirici&tag=aurafocus-21",
-      "description": "Sıcak yaz günlerinde klimanın doğrudan esmesini engelleyerek daha konforlu bir ortam yaratın.",
-      "image_url": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600&auto=format&fit=crop"
+      "affiliate_link": "https://www.amazon.com.tr/s?k=macbook+air+13+m3&tag=aurafocus-21",
+      "description": "Günlük kullanım ve profesyonel işler için ideal, M3 çipli MacBook Air'ı %14 indirimle kaçırmayın.",
+      "category": "laptop",
+      "image_url": "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=600&auto=format&fit=crop"
     },
     {
-      "title": "Kadın Fular Detaylı Mini Deri El ve Omuz Çantası",
-      "original_price": "899 TL",
-      "discount_price": "599 TL",
-      "discount_rate": "%33 İndirim",
+      "title": "Shark AV2501S AI Ultra Robot Süpürge",
+      "original_price": "12.000 TL",
+      "discount_price": "4.999 TL",
+      "discount_rate": "%58 İndirim",
+      "source": "Amazon.com.tr",
+      "affiliate_link": "https://www.amazon.com.tr/s?k=shark+av2501s+robot+süpürge&tag=aurafocus-21",
+      "description": "Yapay zeka destekli akıllı temizlik robotu ile evinizin temizliğini %58 gibi inanılmaz bir indirimle otomatikleştirin.",
+      "category": "vacuum",
+      "image_url": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "Tapo TP-Link C100 1080P İç Mekan Güvenlik Kamerası",
+      "original_price": "900 TL",
+      "discount_price": "569 TL",
+      "discount_rate": "%36 İndirim",
+      "source": "Amazon.com.tr",
+      "affiliate_link": "https://www.amazon.com.tr/s?k=tapo+tp-link+c100+kamera&tag=aurafocus-21",
+      "description": "Ev güvenliğinizi uygun fiyata sağlamak için ideal, 1080P çözünürlüklü bu kamerayı %36 indirimle alın.",
+      "category": "general_tech",
+      "image_url": "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "Lenovo Thinkbook 16 Intel Core Ultra 5 Laptop",
+      "original_price": "28.000 TL",
+      "discount_price": "22.399 TL",
+      "discount_rate": "%20 İndirim",
+      "source": "Hepsiburada",
+      "affiliate_link": "",
+      "description": "Yeni nesil Intel Core Ultra 5 işlemcisiyle yüksek performans sunan bu iş bilgisayarı %20 indirimle stoklarda.",
+      "category": "laptop",
+      "image_url": "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "Dyson V15 Detect Absolute Kablosuz Süpürge",
+      "original_price": "29.999 TL",
+      "discount_price": "24.499 TL",
+      "discount_rate": "%18 İndirim",
+      "source": "Hepsiburada",
+      "affiliate_link": "",
+      "description": "Lazerli başlığı ve üstün emiş gücüyle ev temizliğinde devrim yaratan Dyson V15'i %18 indirimle yakalayın.",
+      "category": "vacuum",
+      "image_url": "https://images.unsplash.com/photo-1558317374-067fb5f30001?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "Philips Airfryer XXL Akıllı Hava Fritözü",
+      "original_price": "9.500 TL",
+      "discount_price": "7.099 TL",
+      "discount_rate": "%25 İndirim",
+      "source": "Hepsiburada",
+      "affiliate_link": "",
+      "description": "Sağlıklı ve pratik yemekler hazırlamak için ideal Philips Airfryer XXL, %25 indirimle mutfağınıza geliyor.",
+      "category": "airfryer",
+      "image_url": "https://images.unsplash.com/photo-1621972750749-0fbb1abb7736?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "JBL Tune 720BT Kablosuz Kulaklık",
+      "original_price": "1.800 TL",
+      "discount_price": "1.249 TL",
+      "discount_rate": "%31 İndirim",
+      "source": "Hepsiburada",
+      "affiliate_link": "",
+      "description": "Güçlü basları ve uzun pil ömrüyle müzik keyfinizi katlayacak JBL kulaklıklar %31 indirimle şimdi sizin.",
+      "category": "headphones",
+      "image_url": "https://images.unsplash.com/photo-1487215078519-e21cc028cb29?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "Xiaomi Smart Band 8 Akıllı Bileklik",
+      "original_price": "1.200 TL",
+      "discount_price": "949 TL",
+      "discount_rate": "%21 İndirim",
+      "source": "Hepsiburada",
+      "affiliate_link": "",
+      "description": "Günlük aktivite takibi ve akıllı bildirimler için şık ve fonksiyonel Xiaomi Smart Band 8, %21 indirimle cebinizi yakmaz.",
+      "category": "smartwatch",
+      "image_url": "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "Stanley Classic Vakumlu Termos 1 Litre",
+      "original_price": "1.800 TL",
+      "discount_price": "1.399 TL",
+      "discount_rate": "%22 İndirim",
       "source": "Trendyol",
-      "affiliate_link": "https://www.amazon.com.tr/s?k=kadın+mini+deri+çanta+fular+detaylı&tag=aurafocus-21",
-      "description": "Şık ve pratik tasarımıyla günlük kullanım için ideal, her kombine uyum sağlayan trend bir aksesuar.",
-      "image_url": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600&auto=format&fit=crop"
+      "affiliate_link": "",
+      "description": "Sıcak içeceklerinizi uzun süre sıcak, soğuk içeceklerinizi soğuk tutan efsane Stanley termos %22 indirimle.",
+      "category": "thermos",
+      "image_url": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=600&auto=format&fit=crop"
     },
     {
-      "title": "JBL Go 3 Bluetooth Hoparlör",
-      "original_price": "1.299 TL",
-      "discount_price": "899 TL",
+      "title": "L'Oréal Paris Hyaluron Uzmanı Nemlendirici Serum",
+      "original_price": "550 TL",
+      "discount_price": "269 TL",
+      "discount_rate": "%51 İndirim",
+      "source": "Trendyol",
+      "affiliate_link": "",
+      "description": "Cildinize yoğun nem sağlayan ve dolgunlaştıran bu popüler serumu Trendyol'a özel %51 indirimle kaçırmayın.",
+      "category": "cosmetic_beauty",
+      "image_url": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "Puma Unisex Mayze Classic Beyaz Sneaker",
+      "original_price": "2.900 TL",
+      "discount_price": "1.999 TL",
       "discount_rate": "%31 İndirim",
       "source": "Trendyol",
-      "affiliate_link": "https://www.amazon.com.tr/s?k=jbl+go+3+bluetooth+hoparlör&tag=aurafocus-21",
-      "description": "Kompakt boyutu ve güçlü sesiyle gittiğiniz her yere müziği taşıyın, su geçirmez yapısıyla her ortama uygun.",
-      "image_url": "https://images.unsplash.com/photo-1487215078519-e21cc028cb29?q=80&w=600&auto=format&fit=crop"
+      "affiliate_link": "",
+      "description": "Şık ve rahat Puma Mayze Classic sneaker ile tarzınızı yansıtırken %31 indirimin tadını çıkarın.",
+      "category": "clothing_accessory",
+      "image_url": "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "Arzum Cook Sense Çok Fonksiyonlu Pişirici",
+      "original_price": "4.200 TL",
+      "discount_price": "3.149 TL",
+      "discount_rate": "%25 İndirim",
+      "source": "Trendyol",
+      "affiliate_link": "",
+      "description": "Yemek yapmayı kolaylaştıran çok fonksiyonlu Arzum pişiriciyi %25 indirimle mutfağınıza ekleyin.",
+      "category": "home_appliance",
+      "image_url": "https://images.unsplash.com/photo-1528740561666-bd247e665488?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "Anker Soundcore Life Q20 Hibrit Gürültü Engelleme Kulaklık",
+      "original_price": "2.100 TL",
+      "discount_price": "1.349 TL",
+      "discount_rate": "%36 İndirim",
+      "source": "Trendyol",
+      "affiliate_link": "",
+      "description": "Hibrit gürültü engelleme özelliğiyle üstün ses kalitesi sunan Anker kulaklığı %36 indirimle deneyimleyin.",
+      "category": "headphones",
+      "image_url": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=600&auto=format&fit=crop"
     }
   ],
-  "last_updated": "2026-06-14T11:41:42.604338Z"
+  "last_updated": "2026-06-14T13:15:21.076746Z"
 }
