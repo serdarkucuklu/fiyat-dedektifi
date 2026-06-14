@@ -113,6 +113,22 @@
                     <button class="filter-btn" data-store="Trendyol">Trendyol</button>
                     <button class="filter-btn" data-store="Hepsiburada">Hepsiburada</button>
                 </div>
+                <div class="sort-box">
+                    <label for="sort-select"><i class="fa-solid fa-sort"></i> Sırala:</label>
+                    <select id="sort-select">
+                        <option value="default">Önerilen</option>
+                        <option value="discount-desc">En Yüksek İndirim</option>
+                        <option value="price-asc">En Düşük Fiyat</option>
+                        <option value="price-desc">En Yüksek Fiyat</option>
+                    </select>
+                </div>
+                <div class="price-slider-box">
+                    <label for="price-limit-slider">
+                        <span><i class="fa-solid fa-tags"></i> Maksimum Fiyat</span>
+                        <span id="price-limit-val">15.000 ₺</span>
+                    </label>
+                    <input type="range" id="price-limit-slider" min="0" max="15000" step="50" value="15000">
+                </div>
             </section>
 
             <!-- DEALS LIST SECTION -->

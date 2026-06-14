@@ -2,6 +2,33 @@
 let allDeals = [];
 let searchQuery = '';
 let currentStore = 'all';
+let currentSort = 'default';
+let priceLimit = 15000;
+let dealAlarms = JSON.parse(localStorage.getItem('deal_price_alarms')) || {};
+
+function saveDealAlarms() {
+    localStorage.setItem('deal_price_alarms', JSON.stringify(dealAlarms));
+}
+
+function parsePrice(priceStr) {
+    if (!priceStr) return 0;
+    const cleaned = priceStr.replace(/\./g, '').replace(/[^0-9]/g, '');
+    return parseFloat(cleaned) || 0;
+}
+
+function parseDiscountRate(rateStr) {
+    if (!rateStr) return 0;
+    const match = rateStr.match(/\d+/);
+    return match ? parseInt(match[0], 10) : 0;
+}
+
+function formatTRY(value) {
+    return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
+}
+
+function makeSafeId(str) {
+    return 'deal-' + btoa(unescape(encodeURIComponent(str))).replace(/=/g, '').replace(/\+/g, '').replace(/\//g, '');
+}
 
 // DOM Elements
 const lastUpdatedBadge = document.getElementById('last-updated');
@@ -22,6 +49,22 @@ async function loadData() {
         const data = await response.json();
         allDeals = data.deals || [];
         
+        // Find max price in allDeals to set slider max value dynamically
+        let maxPrice = 0;
+        allDeals.forEach(deal => {
+            const p = parsePrice(deal.discount_price);
+            if (p > maxPrice) maxPrice = p;
+        });
+        if (maxPrice > 0) {
+            const slider = document.getElementById('price-limit-slider');
+            if (slider) {
+                slider.max = maxPrice;
+                slider.value = maxPrice;
+                priceLimit = maxPrice;
+                document.getElementById('price-limit-val').textContent = formatTRY(maxPrice);
+            }
+        }
+
         // Format last updated timestamp
         if (data.last_updated) {
             const date = new Date(data.last_updated);
@@ -34,6 +77,7 @@ async function loadData() {
             lastUpdatedBadge.textContent = `Güncellendi: ${formattedDate}`;
         }
         
+        checkDealAlarms();
         render();
     } catch (err) {
         console.error('Error loading data.json:', err);
@@ -45,7 +89,7 @@ async function loadData() {
 function render() {
     dealsFeed.innerHTML = '';
     
-    const filtered = allDeals.filter(deal => {
+    let filtered = allDeals.filter(deal => {
         // 1. Text Search Filter
         const matchesSearch = 
             deal.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -54,8 +98,21 @@ function render() {
         // 2. Store Source Filter
         const matchesStore = currentStore === 'all' || deal.source === currentStore;
         
-        return matchesSearch && matchesStore;
+        // 3. Price Limit Filter
+        const price = parsePrice(deal.discount_price);
+        const matchesPrice = price <= priceLimit;
+        
+        return matchesSearch && matchesStore && matchesPrice;
     });
+    
+    // Apply Sorting
+    if (currentSort === 'discount-desc') {
+        filtered.sort((a, b) => parseDiscountRate(b.discount_rate) - parseDiscountRate(a.discount_rate));
+    } else if (currentSort === 'price-asc') {
+        filtered.sort((a, b) => parsePrice(a.discount_price) - parsePrice(b.discount_price));
+    } else if (currentSort === 'price-desc') {
+        filtered.sort((a, b) => parsePrice(b.discount_price) - parsePrice(a.discount_price));
+    }
     
     if (filtered.length === 0) {
         dealsFeed.innerHTML = `
@@ -86,6 +143,13 @@ function render() {
         
         const votes = getDealVotes(deal.title);
         const userVote = votes.userVote;
+        
+        const alarmVal = dealAlarms[deal.title];
+        const alarmHtml = alarmVal ? 
+            `<span class="alarm-active-badge" title="Fiyat bu seviyeye ulaştığında bildirim gönderilecek."><i class="fa-solid fa-bell"></i> Hedef: ${formatTRY(alarmVal)}</span>` : 
+            '';
+            
+        const safeId = makeSafeId(deal.title);
 
         row.innerHTML = `
             <div class="deal-img-container">
@@ -95,6 +159,7 @@ function render() {
             <div class="deal-info-col">
                 <div class="deal-meta">
                     <span class="source-badge" data-source="${deal.source}">${deal.source}</span>
+                    ${alarmHtml}
                 </div>
                 <h3 class="deal-title">${deal.title}</h3>
                 <p class="deal-description">${deal.description}</p>
@@ -110,6 +175,9 @@ function render() {
                     <button class="history-btn" onclick="showPriceHistory('${escapeHtml(deal.title)}')">
                         <i class="fa-solid fa-chart-line"></i> Fiyat Geçmişi
                     </button>
+                    <button class="alarm-toggle-btn ${alarmVal ? 'active' : ''}" onclick="toggleAlarmForm('${escapeHtml(deal.title)}', this)">
+                        <i class="fa-solid fa-bell"></i> ${alarmVal ? 'Alarmı Güncelle' : 'Alarm Kur'}
+                    </button>
                 </div>
             </div>
             <div class="deal-action-col">
@@ -120,6 +188,14 @@ function render() {
                 <a href="${link}" target="_blank" class="deal-btn">
                     Fırsatı Yakala <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
+            </div>
+            
+            <div class="deal-alarm-form" id="alarm-form-${safeId}" style="display: none;">
+                <span class="alarm-form-title"><i class="fa-solid fa-bell"></i> Fiyat Alarmı Kur:</span>
+                <div class="alarm-form-inputs">
+                    <input type="number" class="deal-alarm-target-input" placeholder="Hedef Fiyat (₺)" id="alarm-input-${safeId}" value="${alarmVal || ''}">
+                    <button class="deal-alarm-set-btn" onclick="setDealAlarm('${escapeHtml(deal.title)}', '${safeId}')">Kaydet</button>
+                </div>
             </div>
         `;
         dealsFeed.appendChild(row);
@@ -352,6 +428,109 @@ document.getElementById('chart-modal').addEventListener('click', (e) => {
         closeChartModal();
     }
 });
+
+// Setup Sorting and Price Slider listeners
+const sortSelect = document.getElementById('sort-select');
+if (sortSelect) {
+    sortSelect.addEventListener('change', (e) => {
+        currentSort = e.target.value;
+        render();
+    });
+}
+
+const priceSlider = document.getElementById('price-limit-slider');
+const priceSliderVal = document.getElementById('price-limit-val');
+if (priceSlider && priceSliderVal) {
+    priceSlider.addEventListener('input', (e) => {
+        priceLimit = parseFloat(e.target.value);
+        priceSliderVal.textContent = formatTRY(priceLimit);
+        render();
+    });
+}
+
+// Alarm logic helpers
+window.setDealAlarm = function(title, safeId) {
+    const input = document.getElementById('alarm-input-' + safeId);
+    const target = parseFloat(input.value);
+    if (isNaN(target) || target <= 0) {
+        alert('Lütfen geçerli bir hedef fiyat giriniz.');
+        return;
+    }
+    
+    // Request permission
+    if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+        Notification.requestPermission();
+    }
+    
+    dealAlarms[title] = target;
+    saveDealAlarms();
+    
+    // Hide form
+    const form = document.getElementById('alarm-form-' + safeId);
+    if (form) form.style.display = 'none';
+    
+    // Remove active state from button
+    const btn = document.querySelector(`.alarm-toggle-btn[onclick*="${safeId}"]`);
+    if (btn) btn.classList.remove('active');
+    
+    sendBrowserNotification(
+        'Alarm Kuruldu 🔔',
+        `"${title}" ürünü ${formatTRY(target)} fiyatına ulaştığında size haber vereceğiz.`
+    );
+    
+    render();
+};
+
+window.toggleAlarmForm = function(title, btn) {
+    const safeId = makeSafeId(title);
+    const form = document.getElementById('alarm-form-' + safeId);
+    if (!form) return;
+    const isVisible = form.style.display === 'flex';
+    form.style.display = isVisible ? 'none' : 'flex';
+    btn.classList.toggle('active', !isVisible);
+};
+
+function checkDealAlarms() {
+    if (Object.keys(dealAlarms).length === 0) return;
+    let triggered = [];
+    allDeals.forEach(deal => {
+        const target = dealAlarms[deal.title];
+        if (target) {
+            const currentPrice = parsePrice(deal.discount_price);
+            if (currentPrice <= target) {
+                sendBrowserNotification(
+                    `Fiyat Alarmı Tetiklendi! ⚡`,
+                    `"${deal.title}" ürünü hedeflediğiniz ${formatTRY(target)} fiyatına ulaştı! Güncel Fiyat: ${deal.discount_price}`
+                );
+                triggered.push(deal.title);
+            }
+        }
+    });
+    if (triggered.length > 0) {
+        triggered.forEach(t => delete dealAlarms[t]);
+        saveDealAlarms();
+    }
+}
+
+function sendBrowserNotification(title, body) {
+    if (Notification.permission === 'granted') {
+        new Notification(title, { 
+            body: body,
+            icon: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23d8b26c"%3E%3Ccircle cx="12" cy="12" r="9"/%3E%3C/svg%3E'
+        });
+    }
+    
+    // Custom UI banner alert
+    const banner = document.createElement('div');
+    banner.className = 'custom-alert-banner';
+    banner.innerHTML = `<i class="fa-solid fa-bell"></i> <span><strong>${title}</strong>: ${body}</span>`;
+    document.body.appendChild(banner);
+    
+    setTimeout(() => {
+        banner.classList.add('fade-out');
+        setTimeout(() => banner.remove(), 500);
+    }, 6000);
+}
 
 // Initialize
 loadData();
