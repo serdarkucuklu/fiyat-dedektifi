@@ -67,7 +67,7 @@ function render() {
         
         row.innerHTML = `
             <div class="deal-img-container">
-                <img src="${deal.image_url}" alt="${deal.title}" class="deal-img" loading="lazy">
+                <img src="${deal.image_url}" alt="${deal.title}" class="deal-img" loading="lazy" onerror="this.onerror=null; this.src=getFallbackProductImage('${deal.title}')">
                 <span class="discount-badge">${deal.discount_rate}</span>
             </div>
             <div class="deal-info-col">
@@ -90,6 +90,31 @@ function render() {
         dealsFeed.appendChild(row);
     });
 }
+
+// Helper to provide beautiful fallback images if Unsplash URL fails to load
+function getFallbackProductImage(title) {
+    const lowercaseTitle = title.toLowerCase();
+    
+    // Guaranteed high-quality Unsplash product images
+    if (lowercaseTitle.includes('kulaklık') || lowercaseTitle.includes('headphone') || lowercaseTitle.includes('ses') || lowercaseTitle.includes('hoparlör') || lowercaseTitle.includes('speaker')) {
+        return 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600&auto=format&fit=crop';
+    }
+    if (lowercaseTitle.includes('saat') || lowercaseTitle.includes('watch') || lowercaseTitle.includes('band') || lowercaseTitle.includes('bileklik')) {
+        return 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?q=80&w=600&auto=format&fit=crop';
+    }
+    if (lowercaseTitle.includes('mutfak') || lowercaseTitle.includes('airfryer') || lowercaseTitle.includes('kahve') || lowercaseTitle.includes('tencere') || lowercaseTitle.includes('tava') || lowercaseTitle.includes('bardak') || lowercaseTitle.includes('termos')) {
+        return 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=600&auto=format&fit=crop';
+    }
+    if (lowercaseTitle.includes('mouse') || lowercaseTitle.includes('klavye') || lowercaseTitle.includes('keyboard') || lowercaseTitle.includes('oyuncu') || lowercaseTitle.includes('gaming')) {
+        return 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=600&auto=format&fit=crop';
+    }
+    if (lowercaseTitle.includes('süpürge') || lowercaseTitle.includes('dyson') || lowercaseTitle.includes('robot') || lowercaseTitle.includes('temizlik')) {
+        return 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=600&auto=format&fit=crop';
+    }
+    // Default product image
+    return 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop';
+}
+
 
 // Event Listener for Search Input
 searchInput.addEventListener('input', (e) => {
