@@ -548,3 +548,117 @@ body {
 .deal-img {
     cursor: zoom-in !important;
 }
+
+/* ─── SIDEBAR ADS (DESKTOP ONLY) ───────────────────────────────────────────── */
+.sidebar-ad {
+    display: none;
+    position: fixed;
+    top: 120px;
+    width: 160px;
+    height: calc(100vh - 200px);
+    max-height: 620px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 20px 12px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    z-index: 99;
+    transition: var(--transition);
+}
+
+.sidebar-ad:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+}
+
+.left-ad {
+    left: calc(50% - 600px - 185px);
+}
+
+.right-ad {
+    right: calc(50% - 600px - 185px);
+}
+
+.ad-header {
+    font-family: var(--font-heading);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.ad-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.ad-block:hover {
+    transform: scale(1.02);
+}
+
+.ad-icon {
+    font-size: 1.8rem;
+    color: var(--accent-gold);
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(var(--accent-gold-rgb), 0.2);
+}
+
+.ad-title {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.ad-desc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+.ad-button {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--bg-primary);
+    background: var(--accent-gold);
+    padding: 6px 16px;
+    border-radius: 20px;
+    transition: var(--transition);
+}
+
+.ad-block:hover .ad-button {
+    background: #ffffff;
+    color: var(--bg-primary);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+.ad-divider {
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+    margin: 25px 0;
+}
+
+@media (min-width: 1580px) {
+    .sidebar-ad {
+        display: flex;
+    }
+}
