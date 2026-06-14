@@ -1,0 +1,55 @@
+{
+  "deals": [
+    {
+      "title": "Sony WH-CH720N Gürültü Engelleme Kablosuz Kulaklık",
+      "original_price": "4.000 TL",
+      "discount_price": "2.000 TL",
+      "discount_rate": "%50 İndirim",
+      "source": "Amazon.com.tr",
+      "affiliate_link": "https://www.amazon.com.tr/s?k=sony+wh-ch720n&tag=aurafocus-21",
+      "description": "Ses kalitesi ve aktif gürültü engellemesiyle öne çıkan bu model, %50 indirimle harika bir fiyat/performans fırsatı sunuyor.",
+      "image_url": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=150"
+    },
+    {
+      "title": "Amazon Echo Show 8 + Carrera Akıllı Gözlük Paketi",
+      "original_price": "7.000 TL",
+      "discount_price": "2.450 TL",
+      "discount_rate": "%65 İndirim",
+      "source": "Amazon.com.tr",
+      "affiliate_link": "https://www.amazon.com.tr/s?k=amazon+echo+show+8+carrera+smart+glasses&tag=aurafocus-21",
+      "description": "Alexa deneyimini Carrera akıllı gözlüklerle birleştiren bu özel paket, %65'e varan indirimle akıllı evinizi tamamlıyor.",
+      "image_url": "https://images.unsplash.com/photo-1596540656606-d2460e98031e?w=150"
+    },
+    {
+      "title": "Apple Watch Series 11 Akıllı Saat",
+      "original_price": "18.000 TL",
+      "discount_price": "14.400 TL",
+      "discount_rate": "%20 İndirim",
+      "source": "Amazon.com.tr",
+      "affiliate_link": "https://www.amazon.com.tr/s?k=apple+watch+series+11&tag=aurafocus-21",
+      "description": "Apple'ın en yeni akıllı saati Series 11, bugüne kadarki en düşük fiyatıyla teknoloji tutkunları için kaçırılmaması gereken bir fırsat.",
+      "image_url": "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=150"
+    },
+    {
+      "title": "Dyson V15 Detect Kablosuz Süpürge",
+      "original_price": "30.000 TL",
+      "discount_price": "24.000 TL",
+      "discount_rate": "%20 İndirim",
+      "source": "Hepsiburada",
+      "affiliate_link": "https://www.amazon.com.tr/s?k=dyson+v15+detect&tag=aurafocus-21",
+      "description": "Ev temizliğinde devrim yaratan Dyson V15 Detect, Hepsiburada'daki özel tekliflerle şimdi daha ulaşılabilir ve cazip.",
+      "image_url": "https://images.unsplash.com/photo-1582234057053-4886b51079d3?w=150"
+    },
+    {
+      "title": "Logitech G Pro X Superlight Gaming Mouse",
+      "original_price": "3.500 TL",
+      "discount_price": "1.750 TL",
+      "discount_rate": "%50 İndirim",
+      "source": "Amazon.com.tr",
+      "affiliate_link": "https://www.amazon.com.tr/s?k=logitech+g+pro+x+superlight&tag=aurafocus-21",
+      "description": "Rekabetçi oyuncuların tercihi olan bu hafif ve yüksek performanslı gaming mouse, %50 indirimle en uygun fiyatıyla stoklarda.",
+      "image_url": "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=150"
+    }
+  ],
+  "last_updated": "2026-06-14T10:55:15.289253Z"
+}
