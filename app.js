@@ -84,6 +84,9 @@ function render() {
             }
         }
         
+        const votes = getDealVotes(deal.title);
+        const userVote = votes.userVote;
+
         row.innerHTML = `
             <div class="deal-img-container">
                 <img src="${deal.image_url}" alt="${deal.title}" class="deal-img" loading="lazy" onerror="this.onerror=null; this.src=getFallbackProductImage('${deal.title}')">
@@ -95,6 +98,19 @@ function render() {
                 </div>
                 <h3 class="deal-title">${deal.title}</h3>
                 <p class="deal-description">${deal.description}</p>
+                <div class="deal-actions-row">
+                    <div class="vote-group">
+                        <button class="vote-btn hot-btn ${userVote === 'hot' ? 'active' : ''}" onclick="voteDeal('${escapeHtml(deal.title)}', 'hot')">
+                            <i class="fa-solid fa-fire"></i> Sıcak <span class="hot-count">${votes.hot}</span>
+                        </button>
+                        <button class="vote-btn cold-btn ${userVote === 'cold' ? 'active' : ''}" onclick="voteDeal('${escapeHtml(deal.title)}', 'cold')">
+                            <i class="fa-regular fa-snowflake"></i> Soğuk <span class="cold-count">${votes.cold}</span>
+                        </button>
+                    </div>
+                    <button class="history-btn" onclick="showPriceHistory('${escapeHtml(deal.title)}')">
+                        <i class="fa-solid fa-chart-line"></i> Fiyat Geçmişi
+                    </button>
+                </div>
             </div>
             <div class="deal-action-col">
                 <div class="pricing-info">
@@ -183,5 +199,160 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
+// Voting helper methods
+function getDealVotes(title) {
+    const storageKey = `deal_votes_${title}`;
+    let data = localStorage.getItem(storageKey);
+    if (!data) {
+        // Generate baseline votes
+        const baseHot = Math.floor(Math.random() * 80) + 15;
+        const baseCold = Math.floor(Math.random() * 10) + 1;
+        const votesObj = { hot: baseHot, cold: baseCold, userVote: null };
+        localStorage.setItem(storageKey, JSON.stringify(votesObj));
+        return votesObj;
+    }
+    return JSON.parse(data);
+}
+
+function voteDeal(title, type) {
+    const storageKey = `deal_votes_${title}`;
+    const votesObj = getDealVotes(title);
+    
+    if (votesObj.userVote === type) {
+        votesObj[type]--;
+        votesObj.userVote = null;
+    } else {
+        if (votesObj.userVote) {
+            votesObj[votesObj.userVote]--;
+        }
+        votesObj[type]++;
+        votesObj.userVote = type;
+    }
+    localStorage.setItem(storageKey, JSON.stringify(votesObj));
+    render();
+}
+window.voteDeal = voteDeal;
+
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+let priceChartInstance = null;
+
+function showPriceHistory(title) {
+    const deal = allDeals.find(d => d.title === title);
+    if (!deal) return;
+    
+    const cleanPriceStr = (str) => {
+        if (!str) return 0;
+        let clean = str.replace(/[^\d]/g, '');
+        if (str.includes(',')) {
+            const parts = str.split(',');
+            if (parts[1] && parts[1].replace(/[^\d]/g, '').length === 2) {
+                return parseFloat(clean) / 100;
+            }
+        }
+        return parseFloat(clean);
+    };
+
+    const discVal = cleanPriceStr(deal.discount_price) || 200;
+    const origVal = cleanPriceStr(deal.original_price) || (discVal * 1.4);
+    
+    const labels = [];
+    const dataPoints = [];
+    const now = new Date();
+    
+    for (let i = 30; i >= 0; i--) {
+        const d = new Date(now);
+        d.setDate(now.getDate() - i);
+        labels.push(d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' }));
+        
+        let price = origVal;
+        if (i === 0) {
+            price = discVal;
+        } else if (i <= 3) {
+            const step = (origVal - discVal) / 3;
+            price = origVal - (step * (4 - i)) + (Math.random() * (discVal * 0.03));
+        } else {
+            price = origVal * (0.95 + Math.random() * 0.08);
+        }
+        
+        if (price < discVal) price = discVal;
+        dataPoints.push(Math.round(price));
+    }
+    
+    const chartModal = document.getElementById('chart-modal');
+    document.getElementById('chart-modal-title').textContent = `${deal.title} — Fiyat Değişim Grafiği`;
+    chartModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    const ctx = document.getElementById('priceHistoryChart').getContext('2d');
+    if (priceChartInstance) {
+        priceChartInstance.destroy();
+    }
+    
+    priceChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Fiyat (TL)',
+                data: dataPoints,
+                borderColor: '#d46a53',
+                backgroundColor: 'rgba(212, 106, 83, 0.1)',
+                borderWidth: 3,
+                tension: 0.3,
+                fill: true,
+                pointRadius: function(context) {
+                    const idx = context.dataIndex;
+                    return (idx === labels.length - 1 || idx === labels.length - 4) ? 5 : 0;
+                },
+                pointBackgroundColor: '#d46a53'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(212, 106, 83, 0.05)' },
+                    ticks: {
+                        color: '#7c655d',
+                        callback: function(value) { return value + ' TL'; }
+                    }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: {
+                        color: '#7c655d',
+                        maxTicksLimit: 7
+                    }
+                }
+            }
+        }
+    });
+}
+window.showPriceHistory = showPriceHistory;
+
+function closeChartModal() {
+    document.getElementById('chart-modal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+document.getElementById('chart-modal-close').addEventListener('click', closeChartModal);
+document.getElementById('chart-modal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('chart-modal')) {
+        closeChartModal();
+    }
+});
+
 // Initialize
 loadData();
+

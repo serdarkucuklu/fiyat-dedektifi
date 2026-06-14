@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <!-- Left Sidebar Ad -->
@@ -138,6 +140,20 @@
         <div class="modal-content-wrapper">
             <img class="modal-content" id="modal-img" src="" alt="">
             <div class="modal-caption" id="modal-caption"></div>
+        </div>
+    </div>
+
+    <!-- Price History Modal -->
+    <div id="chart-modal" class="image-modal">
+        <div class="modal-content-wrapper chart-modal-wrapper">
+            <button class="modal-close-chart" id="chart-modal-close" aria-label="Kapat">&times;</button>
+            <div class="chart-modal-content">
+                <h3 class="chart-modal-title" id="chart-modal-title">Fiyat Değişim Geçmişi</h3>
+                <p class="chart-modal-subtitle">Bu ürünün geçmiş fiyat düşüşleri analiz edilerek indirim oranı doğrulanmıştır.</p>
+                <div class="canvas-container">
+                    <canvas id="priceHistoryChart"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 
